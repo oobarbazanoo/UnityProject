@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class RabbitController : MonoBehaviour
 {
-    public float speed = 1;
+    public float speed = 1f;
     Rigidbody2D myBody = null;
     Animator animator = null;
     SpriteRenderer spriteRenderer = null;
+    Transform parent = null;
 
     bool isGrounded = false;
     bool JumpActive = false;
@@ -23,6 +24,8 @@ public class RabbitController : MonoBehaviour
         spriteRenderer = this.GetComponent<SpriteRenderer>();
 
         LevelController.current.setStartPosition(transform.position);
+
+        this.parent = this.transform.parent;
     }
 	
 	// Update is called once per frame
@@ -37,10 +40,10 @@ public class RabbitController : MonoBehaviour
         if(Mathf.Abs(value) > 0)
         {
             moveBody(value);
-            animateRunning(true);
+            animate("run", true);
         }
         else
-        {animateRunning(false);}
+        {animate("run", false);}
 
         if(value < 0)
         {
@@ -51,21 +54,29 @@ public class RabbitController : MonoBehaviour
             spriteRenderer.flipX = false;
         }
 
-
-        //class HeroRabit, void FixedUpdate()
         Vector3 from = transform.position + Vector3.up * 0.3f;
         Vector3 to = transform.position + Vector3.down * 0.1f;
         int layer_id = 1 << LayerMask.NameToLayer("GroundLayer");
         //Перевіряємо чи проходить лінія через Collider з шаром Ground
         RaycastHit2D hit = Physics2D.Linecast(from, to, layer_id);
-        if (hit)
+        if(hit)
         {
             isGrounded = true;
+
+            //Перевіряємо чи ми опинились на платформі
+            if (hit.transform != null && hit.transform.GetComponent<MovingPlatform>() != null)
+            {
+                //Приліпаємо до платформи
+                SetNewParent(this.transform, hit.transform);
+            }
         }
         else
         {
             isGrounded = false;
+
+            SetNewParent(this.transform, this.parent);
         }
+
         //Намалювати лінію (для розробника)
         Debug.DrawLine(from, to, Color.red);
 
@@ -95,14 +106,10 @@ public class RabbitController : MonoBehaviour
             }
         }
 
-        if (this.isGrounded)
-        {
-            animator.SetBool("jump", false);
-        }
+        if(this.isGrounded)
+        {animate("jump", false);}
         else
-        {
-            animator.SetBool("jump", true);
-        }
+        {animate("jump", true);}
     }
 
     void moveBody(float howMuch)
@@ -112,8 +119,14 @@ public class RabbitController : MonoBehaviour
         myBody.velocity = vel;
     }
 
-    void animateRunning(bool toAnimate)
+    void animate(string what, bool toAnimate)
+    {animator.SetBool(what, toAnimate);}
+
+    static void SetNewParent(Transform obj, Transform new_parent)
     {
-        animator.SetBool("run", toAnimate);
+        if (obj.transform.parent != new_parent)
+        {
+            obj.transform.parent = new_parent;
+        }
     }
 }
