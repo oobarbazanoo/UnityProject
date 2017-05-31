@@ -16,5 +16,21 @@ public class DeathHere : MonoBehaviour {
             //Повідомляємо рівень, про смерть кролика
             LevelController.current.onRabitDeath(rabit);
         }
+
+
+        RabbitStats stats = rabit.gameObject.GetComponent<RabbitStats>();
+        if (stats.rabbitSize == 1)
+        {
+            stats.rabbitSize = 0;
+            makeRabbitSmaller(rabit);
+        }
+            
+    }
+
+    private void makeRabbitSmaller(RabbitController rabit)
+    {
+        Transform transgormToChange = rabit.gameObject.GetComponent<Transform>();
+
+        transgormToChange.localScale = new Vector3(transgormToChange.localScale.x / 2, transgormToChange.localScale.y / 2, transgormToChange.localScale.z);
     }
 }

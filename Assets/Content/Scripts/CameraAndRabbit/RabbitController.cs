@@ -21,6 +21,11 @@ public class RabbitController : MonoBehaviour
     public float MaxJumpTime = 2f;
     public float JumpSpeed = 2f;
 
+    void Awake()
+    {
+        LevelController.SetRabbit(this.gameObject);
+    }
+
     // Use this for initialization
     void Start()
     {
