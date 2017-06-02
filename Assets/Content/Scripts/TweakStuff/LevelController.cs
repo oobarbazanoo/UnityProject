@@ -17,6 +17,8 @@ public class LevelController : MonoBehaviour
     {
         //При смерті кролика повертаємо на початкову позицію
         rabit.transform.position = this.startingPosition;
+        RabbitStats rabbitStats = rabit.gameObject.GetComponent<RabbitStats>();
+        rabbitStats.isDead = false;
     }
 
     public static GameObject getRabbit()

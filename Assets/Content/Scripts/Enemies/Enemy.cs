@@ -3,28 +3,68 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public enum Mode
+    {
+        OnGuard,
+        Attack
+    }
+
+    public enum Turned
+    {
+        Left,
+        Right
+    }
+
+    public Mode currentMode;
+    public Turned turned;
 
     public Vector3 MoveBy;
-    public float movingSpeed = 0.2f;
+    public float walkingSpeed = 0.15f;
+    public float runningSpeed = 0.2f;
     public float waitTime = 4f;
 
     private float _waitTime;
-    private SpriteRenderer spriteRenderer;
+    protected SpriteRenderer spriteRenderer;
     private Animator animator;
     private Transform rabbitTransform;
 
     Vector3 pointA;
+
+    internal void StopAllAnimations()
+    {
+        AnimateContiniously("idle", false);
+        AnimateContiniously("walking", false);
+        AnimateContiniously("running", false);
+    }
+
     Vector3 pointB;
     Vector3 target;
     Vector3 destinationVector;
 
     protected virtual void Start()
     {
+		initializePointsToMoveToAndFrom();
         initializeNeededComponents();
-        initializePointsToMoveToAndFrom();
+        setFirstValues();
+    }
+
+    private void setFirstValues()
+    {
         setFirstTargetToInitializedPointB();
         setFirstDestinationVector();
         setFirstWaitTime();
+        setFirstMode();
+        setFirstTurned();
+    }
+
+    private void setFirstTurned()
+    {
+        this.turned = Turned.Left;
+    }
+
+    private void setFirstMode()
+    {
+        this.currentMode = Mode.OnGuard;
     }
 
     private void initializeNeededComponents()
@@ -59,14 +99,56 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (InFight())
+        {
+            if(RabbitNotNear())
+            {
+                ContinueToBeOnGuard();
+            }
+            else
+            {
+                DoFight();
+                return;
+            }
+        }
+
         moveAndIfArrivedWait();
-        ifRabbitNearAttack();
+        ifRabbitNearStartAttack();
     }
 
-    private void ifRabbitNearAttack()
+    private void ContinueToBeOnGuard()
+    {
+        turnAccordingWithVectorAlongX(destinationVector);
+        this.currentMode = Mode.OnGuard;
+        StopAllAnimations();
+        AnimateContiniously("walking", true);
+    }
+
+    private bool RabbitNotNear()
+    {
+        return !ifRabbitNear();
+    }
+
+    private void DoFight()
+    { AttackTheRabbit(LevelController.getRabbit()); }
+
+    private bool InFight()
+    {
+        return this.currentMode == Mode.Attack;
+    }
+
+    private void ifRabbitNearStartAttack()
     {
         if (ifRabbitNear())
-        {AttackTheRabbit(LevelController.getRabbit()); }
+        {
+            resetWaitTimeForFutureWaitOnTheArriving();
+            StartAttackTheRabbit();
+        }
+    }
+
+    private void StartAttackTheRabbit()
+    {
+        this.currentMode = Mode.Attack;
     }
 
     private bool ifRabbitNear()
@@ -101,7 +183,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            this.transform.Translate(destinationVector * movingSpeed);
+            this.transform.Translate(destinationVector * walkingSpeed);
         }
     }
 
@@ -129,6 +211,7 @@ public class Enemy : MonoBehaviour
 
     private void turnAround()
     {
+        this.turned = (this.turned == Turned.Left) ? Turned.Right : Turned.Left;
         destinationVector = (-1) * destinationVector;
         spriteRenderer.flipX = !spriteRenderer.flipX;
     }
@@ -137,15 +220,54 @@ public class Enemy : MonoBehaviour
     {
         pos.z = 0;
         target.z = 0;
+
+		pos.y = 0;
+		target.y = 0;
+
         return Vector3.Distance(pos, target) < 0.06f;
     }
 
-    private void AnimateContiniously(string what, bool toAnimate)
+    public void AnimateContiniously(string what, bool toAnimate)
     {
         animator.SetBool(what, toAnimate);
     }
 
+    public void turnAccordingWithVectorAlongX(Vector3 _destinationVector)
+    {
+        if (_destinationVector.x < 0)
+        {
+            if (this.turned == Turned.Right)
+            {
+                this.spriteRenderer.flipX = !this.spriteRenderer.flipX;
+                this.turned = Turned.Left;
+            }
+        }
+        else if (_destinationVector.x > 0)
+        {
+            if (this.turned == Turned.Left)
+            {
+                this.spriteRenderer.flipX = !this.spriteRenderer.flipX;
+                this.turned = Turned.Right;
+            }
+        }
+    }
+
+    public void AnimateOnce(string what)
+    { animator.SetTrigger(what); }
+
+
+    protected void Die()
+    {
+        StopAllAnimations();
+        Destroy(this.gameObject);
+    }
+
     protected virtual void AttackTheRabbit(GameObject rabbit)
+    {
+        Debug.Log("In a base class");
+    }
+
+    public virtual void DieFromRabbit()
     {
         Debug.Log("In a base class");
     }
