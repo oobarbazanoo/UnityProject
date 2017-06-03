@@ -69,7 +69,6 @@ public class Enemy : MonoBehaviour
 
     private double getRandomDouble(double fromInclusive, double toExclusive)
     {
-        System.Random rnd = new System.Random();
         return NextDouble(new System.Random(), fromInclusive, toExclusive);
     }
 
@@ -101,7 +100,7 @@ public class Enemy : MonoBehaviour
     {
         spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
         animator = this.gameObject.GetComponent<Animator>();
-        rabbitTransform = LevelController.getRabbit().GetComponent<Transform>();
+        rabbitTransform = Level1Controller.getRabbit().GetComponent<Transform>();
     }
 
     private void initializePointsToMoveToAndFrom()
@@ -164,7 +163,7 @@ public class Enemy : MonoBehaviour
     }
 
     private void DoFight()
-    { AttackTheRabbit(LevelController.getRabbit()); }
+    { AttackTheRabbit(Level1Controller.getRabbit()); }
 
     private bool InFight()
     {

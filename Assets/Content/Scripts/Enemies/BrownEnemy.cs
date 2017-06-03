@@ -20,7 +20,7 @@ public class BrownEnemy : Enemy
 
 	private void initEverythingBeforehand()
 	{
-		rabbitStats = LevelController.getRabbit().GetComponent<RabbitStats>();
+		rabbitStats = Level1Controller.getRabbit().GetComponent<RabbitStats>();
         this.timeWhenLastCarrotWasThrown = 0;
         this.throwCarrotLapsDuration = 1.7f;
     }

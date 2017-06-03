@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraConfig : MonoBehaviour
 {
-    public RabbitController objToFollow;
+    public GameObject objToFollow;
 
 	// Use this for initialization
 	void Start()

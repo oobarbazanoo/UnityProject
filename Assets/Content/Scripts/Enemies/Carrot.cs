@@ -63,9 +63,9 @@ public class Carrot : MonoBehaviour
 
 		carrotTransform = carrot.GetComponent<Transform> ();
 
-        this.carrotFlySpeed = 0.2f;
+        this.carrotFlySpeed = 0.3f;
 
-        this.destroyItAfterThis = 1f;
+        this.destroyItAfterThis = 2f;
 
         StartCoroutine(destroyLater());
     }

@@ -23,7 +23,7 @@ public class RabbitController : MonoBehaviour
 
     void Awake()
     {
-        LevelController.SetRabbit(this.gameObject);
+        Level1Controller.SetRabbit(this.gameObject);
     }
 
     // Use this for initialization
@@ -37,7 +37,7 @@ public class RabbitController : MonoBehaviour
         animateController = this.GetComponent<AnimateController>();
         spriteRenderer = this.GetComponent<SpriteRenderer>();
 
-        LevelController.current.setStartPosition(transform.position);
+        Level1Controller.current.setStartPosition(transform.position);
 
         this.parent = this.transform.parent;
 

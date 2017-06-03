@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 4531766342692108}
   - component: {fileID: 114136319849403616}
   m_Layer: 0
-  m_Name: NearBackground
+  m_Name: FarBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -354,7 +354,7 @@ GameObject:
   - component: {fileID: 4120248715623354}
   - component: {fileID: 114229486321229124}
   m_Layer: 0
-  m_Name: FarBackground
+  m_Name: NearBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
