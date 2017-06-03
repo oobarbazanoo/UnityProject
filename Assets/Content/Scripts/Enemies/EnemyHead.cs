@@ -6,17 +6,21 @@ public class EnemyHead : MonoBehaviour
 {
     void OnTriggerEnter2D(Collider2D coll)
     {
+        GameObject rabbit = coll.gameObject;
+
         //Намагаємося отримати компонент кролика
-        RabbitController rabit = coll.gameObject.GetComponent<RabbitController>();
+        RabbitController rabbitController = rabbit.GetComponent<RabbitController>();
         //Впасти міг не тільки кролик
-        if (rabit == null)
+        if (rabbitController == null)
         { return;  }
 
 
-        if (rabit.gameObject.GetComponent<Rigidbody2D>().velocity.y > 0)
+        if (rabbit.GetComponent<Rigidbody2D>().velocity.y > 0)
         { return; }
 
         this.gameObject.transform.parent.gameObject.GetComponent<Enemy>().DieFromRabbit();
+
+        rabbit.GetComponent<Rigidbody2D>().AddForce(Vector3.up*12, ForceMode2D.Impulse);
     }
 
     void Start ()

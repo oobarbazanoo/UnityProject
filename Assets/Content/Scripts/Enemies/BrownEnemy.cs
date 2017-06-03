@@ -85,6 +85,8 @@ public class BrownEnemy : Enemy
 		obj.transform.position = positionForCarrot;
 		//Запускаємо в рух
 		Carrot carrot = obj.GetComponent<Carrot> ();
+        if(directionToThrowCarrot.x < 0)
+        { carrot.gameObject.GetComponent<SpriteRenderer>().flipX = true; }
 		carrot.launch (directionToThrowCarrot);
 	}
 
