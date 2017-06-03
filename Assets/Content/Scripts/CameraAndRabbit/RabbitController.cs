@@ -40,6 +40,8 @@ public class RabbitController : MonoBehaviour
         LevelController.current.setStartPosition(transform.position);
 
         this.parent = this.transform.parent;
+
+        Physics2D.IgnoreLayerCollision(12, 10, true);
     }
 	
 	// Update is called once per frame
@@ -50,7 +52,17 @@ public class RabbitController : MonoBehaviour
 
     void FixedUpdate()
     {
-            float value = Input.GetAxis("Horizontal");
+        if (this.isVulnerable)
+        {
+            Physics2D.IgnoreLayerCollision(11, 10, false);
+        }
+        else
+        {
+            Physics2D.IgnoreLayerCollision(11, 10, true);
+        }
+
+
+        float value = Input.GetAxis("Horizontal");
             if (Mathf.Abs(value) > 0)
             {
                 moveBody(value);

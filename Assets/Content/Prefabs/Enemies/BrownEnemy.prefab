@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4050312481680112}
   - component: {fileID: 68247035350356546}
   - component: {fileID: 114697892031988172}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 61143408398783216}
   - component: {fileID: 95082704363270542}
   - component: {fileID: 114352080153137774}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: BrownEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,8 +67,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1957552597753580}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -23.151073, y: 0.21, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -14.707932, y: -3.1640618, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4050312481680112}
@@ -135,9 +135,10 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.5869999, y: 1.3499324}
-  - {x: -0.58343697, y: 1.4123884}
+  - {x: -0.5130253, y: 1.4133404}
+  - {x: -0.53588104, y: 1.4123884}
   - {x: -0.1560688, y: 1.703932}
+  - {x: 0.28062057, y: 1.4222893}
   - {x: 0.31232452, y: 1.4328573}
 --- !u!95 &95082704363270542
 Animator:
@@ -172,7 +173,8 @@ MonoBehaviour:
   MoveBy: {x: -8, y: 0, z: 0}
   walkingSpeed: 0.15
   runningSpeed: 0.2
-  waitTime: 4
+  minimumWaitTime: 0
+  maximumWaitTime: 0
   prefabCarrot: {fileID: 1475178531180948, guid: 432189fc8f549ab418771434e464c7e1,
     type: 2}
   throwCarrotLapsDuration: 0

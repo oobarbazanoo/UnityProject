@@ -21,17 +21,20 @@ public class Enemy : MonoBehaviour
     public Vector3 MoveBy;
     public float walkingSpeed = 0.15f;
     public float runningSpeed = 0.2f;
-    public float waitTime = 4f;
 
-    private float _waitTime;
+    public float minimumWaitTime, maximumWaitTime;
+
+    private double _waitTime;
+    private double waitTime;
+
     protected SpriteRenderer spriteRenderer;
     private Animator animator;
     private Transform rabbitTransform;
 
     Vector3 pointA;
 
-    protected bool attacking;
     protected bool running;
+    protected bool attacking;
 
     internal void StopAllAnimations()
     {
@@ -41,7 +44,7 @@ public class Enemy : MonoBehaviour
     }
 
     public void stopAttacking()
-    { attacking = false; }
+    { attacking = false;}
 
     public void stopRunning()
     { running = false; }
@@ -54,7 +57,25 @@ public class Enemy : MonoBehaviour
     {
 		initializePointsToMoveToAndFrom();
         initializeNeededComponents();
+        initializeNeededValues();
         setFirstValues();
+    }
+
+    private void initializeNeededValues()
+    {
+        minimumWaitTime = 2;
+        maximumWaitTime = 5;
+    }
+
+    private double getRandomDouble(double fromInclusive, double toExclusive)
+    {
+        System.Random rnd = new System.Random();
+        return NextDouble(new System.Random(), fromInclusive, toExclusive);
+    }
+
+    double NextDouble(System.Random rng, double min, double max)
+    {
+        return min + (rng.NextDouble() * (max - min));
     }
 
     private void setFirstValues()
@@ -101,8 +122,12 @@ public class Enemy : MonoBehaviour
         this.destinationVector = Vector3.Normalize(_destinationVector);
     }
 
+    private double GetRandomTime()
+    { return getRandomDouble(minimumWaitTime, maximumWaitTime); }
+
     private void setFirstWaitTime()
     {
+        waitTime = GetRandomTime();
         _waitTime = waitTime;
     }
 
@@ -210,6 +235,7 @@ public class Enemy : MonoBehaviour
 
     private void resetWaitTimeForFutureWaitOnTheArriving()
     {
+        waitTime = GetRandomTime();
         _waitTime = waitTime;
     }
 
@@ -277,6 +303,11 @@ public class Enemy : MonoBehaviour
     }
 
     public virtual void DieFromRabbit()
+    {
+        Debug.Log("In a base class");
+    }
+
+    public virtual void StopAttack()
     {
         Debug.Log("In a base class");
     }

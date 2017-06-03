@@ -15,7 +15,7 @@ public class EnemyHead : MonoBehaviour
         { return;  }
 
 
-        if (rabbit.GetComponent<Rigidbody2D>().velocity.y > 0)
+        if (rabbit.GetComponent<Rigidbody2D>().velocity.y >= 0)
         { return; }
 
         this.gameObject.transform.parent.gameObject.GetComponent<Enemy>().DieFromRabbit();

@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 68930458622717828}
   - component: {fileID: 114562386955857062}
   m_Layer: 0
-  m_Name: HeadN
+  m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 61209826702683482}
   - component: {fileID: 114432375874720724}
   - component: {fileID: 95299528679415792}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: GreenEnemy (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1887284225420510}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -23.159294, y: 0.17140198, z: 0}
+  m_LocalPosition: {x: -43.71373, y: 12.71732, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4982093220729040}
@@ -107,7 +107,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.016455412, y: 0.72058403}
+  m_Offset: {x: 0.13001323, y: 0.19548503}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -118,7 +118,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.40379572, y: 1.2360208}
+  m_Size: {x: 0.63091135, y: 0.1859228}
   m_EdgeRadius: 0
 --- !u!68 &68930458622717828
 EdgeCollider2D:
