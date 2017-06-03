@@ -79,7 +79,7 @@ public class Carrot : MonoBehaviour
     // Update is called once per frame
     void Update () 
 	{
-		if(direction == null)
+		if(direction == Vector3.zero)
 		{return;}
 
 		carrotTransform.Translate (direction* carrotFlySpeed);

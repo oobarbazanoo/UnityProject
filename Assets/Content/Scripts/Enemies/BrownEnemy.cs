@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class BrownEnemy : Enemy
 {
-	private AnimateController animateController;
 	private RabbitStats rabbitStats;
-	private RabbitController rabbitController;
 	private bool isDead;
 	public GameObject prefabCarrot;
 	private Vector3 directionToThrowCarrot;
@@ -23,8 +21,6 @@ public class BrownEnemy : Enemy
 	private void initEverythingBeforehand()
 	{
 		rabbitStats = LevelController.getRabbit().GetComponent<RabbitStats>();
-		animateController = LevelController.getRabbit().GetComponent<AnimateController>();
-		rabbitController = LevelController.getRabbit().GetComponent<RabbitController>();
         this.timeWhenLastCarrotWasThrown = 0;
         this.throwCarrotLapsDuration = 1.7f;
     }

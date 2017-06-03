@@ -19,6 +19,8 @@ public class GreenEnemy : Enemy
         rabbitStats = LevelController.getRabbit().GetComponent<RabbitStats>();
         animateController = LevelController.getRabbit().GetComponent<AnimateController>();
         rabbitController = LevelController.getRabbit().GetComponent<RabbitController>();
+        base.attacking = false;
+        base.running = false;
     }
 
     protected override void Update ()
@@ -28,7 +30,7 @@ public class GreenEnemy : Enemy
 
     protected override void AttackTheRabbit(GameObject rabbit)
     {
-        if (isDead)
+        if (isDead || base.attacking || rabbitStats.isDead)
         { return; }
 
         Vector3 rabbitPosition = rabbit.GetComponent<Transform>().position;
@@ -37,20 +39,37 @@ public class GreenEnemy : Enemy
         {
             RunToRabbit(rabbitPosition);
         }
-        else if (RabbitIsNotReachedOnY(rabbitPosition))
+
+        if(base.running)
+        {return; }
+
+
+        if (RabbitIsNotReachedOnY(rabbitPosition))
         {
-            AnimateOnce("die");
-            isDead = true;
+            WaitForRabbit();
         }
-        else if(!rabbitStats.isDead)
+        else
         {
-            PunchRabbit(rabbit);
+            PunchRabbit(rabbitController.gameObject);
         }
+    }
+
+    private void WaitForRabbit()
+    {
+        base.StopAllAnimations();
+        base.AnimateContiniously("idle", true);
+    }
+
+    public override void DieFromRabbit()
+    {
+        AnimateOnce("die");
+        isDead = true;
     }
 
     private void PunchRabbit(GameObject rabbit)
     {
         base.StopAllAnimations();
+        base.attacking = true;
         base.AnimateOnce("attack");
 
         if (rabbitController.isVulnerable)
@@ -96,6 +115,7 @@ public class GreenEnemy : Enemy
     private void RunToRabbit(Vector3 rabbitPosition)
     {
         base.StopAllAnimations();
+        base.running = true;
         base.AnimateContiniously("running", true);
 
         Vector3 _destinationVector = rabbitPosition - this.transform.position;

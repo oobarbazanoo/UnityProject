@@ -30,12 +30,21 @@ public class Enemy : MonoBehaviour
 
     Vector3 pointA;
 
+    protected bool attacking;
+    protected bool running;
+
     internal void StopAllAnimations()
     {
         AnimateContiniously("idle", false);
         AnimateContiniously("walking", false);
         AnimateContiniously("running", false);
     }
+
+    public void stopAttacking()
+    { attacking = false; }
+
+    public void stopRunning()
+    { running = false; }
 
     Vector3 pointB;
     Vector3 target;
