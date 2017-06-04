@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeathHere : MonoBehaviour {
-
+public class DeathHere : MonoBehaviour
+{
     //Стандартна функція, яка викличеться,
     //коли поточний об’єкт зіштовхнеться із іншим
     void OnTriggerEnter2D(Collider2D collider)
@@ -14,17 +14,14 @@ public class DeathHere : MonoBehaviour {
         if (rabit != null)
         {
             //Повідомляємо рівень, про смерть кролика
-            Level1Controller.current.onRabitDeath(rabit);
+            LevelController.current.onRabitDeath(rabit);
+            RabbitStats stats = rabit.gameObject.GetComponent<RabbitStats>();
+            if (stats.rabbitSize == 1)
+            {
+                stats.rabbitSize = 0;
+                makeRabbitSmaller(rabit);
+            }
         }
-
-
-        RabbitStats stats = rabit.gameObject.GetComponent<RabbitStats>();
-        if (stats.rabbitSize == 1)
-        {
-            stats.rabbitSize = 0;
-            makeRabbitSmaller(rabit);
-        }
-            
     }
 
     private void makeRabbitSmaller(RabbitController rabit)

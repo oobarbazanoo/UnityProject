@@ -16,9 +16,9 @@ public class GreenEnemy : Enemy
 
     private void initEverythingBeforehand()
     {
-        rabbitStats = Level1Controller.getRabbit().GetComponent<RabbitStats>();
-        animateController = Level1Controller.getRabbit().GetComponent<AnimateController>();
-        rabbitController = Level1Controller.getRabbit().GetComponent<RabbitController>();
+        rabbitStats = LevelController.getRabbit().GetComponent<RabbitStats>();
+        animateController = LevelController.getRabbit().GetComponent<AnimateController>();
+        rabbitController = LevelController.getRabbit().GetComponent<RabbitController>();
         base.attacking = false;
         base.running = false;
     }

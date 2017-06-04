@@ -100,7 +100,7 @@ public class Enemy : MonoBehaviour
     {
         spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
         animator = this.gameObject.GetComponent<Animator>();
-        rabbitTransform = Level1Controller.getRabbit().GetComponent<Transform>();
+        rabbitTransform = LevelController.getRabbit().GetComponent<Transform>();
     }
 
     private void initializePointsToMoveToAndFrom()
@@ -163,7 +163,7 @@ public class Enemy : MonoBehaviour
     }
 
     private void DoFight()
-    { AttackTheRabbit(Level1Controller.getRabbit()); }
+    { AttackTheRabbit(LevelController.getRabbit()); }
 
     private bool InFight()
     {

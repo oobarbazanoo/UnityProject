@@ -24,6 +24,6 @@ public class AnimateController : MonoBehaviour
     {
         animate("die", false);
         rabbit.enabled = true;
-        Level1Controller.current.onRabitDeath(rabbit);
+        LevelController.current.onRabitDeath(rabbit);
     }
 }

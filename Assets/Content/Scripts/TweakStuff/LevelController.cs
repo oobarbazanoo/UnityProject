@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Level1Controller : MonoBehaviour
+public class LevelController : MonoBehaviour
 {
     Vector3 startingPosition;
     private static GameObject rabbitObj;
@@ -24,7 +24,7 @@ public class Level1Controller : MonoBehaviour
     public static GameObject getRabbit()
     {return rabbitObj;}
 
-    public static Level1Controller current;
+    public static LevelController current;
     void Awake()
     {
         current = this;
