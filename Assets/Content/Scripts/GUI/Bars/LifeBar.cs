@@ -8,6 +8,4 @@ public class LifeBar : MonoBehaviour
     {
         LevelController.SetLifeBar(this.gameObject);
     }
-
-
 }
