@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,9 +12,13 @@ public class LevelController : MonoBehaviour
     private static GameObject crystalsBarObj;
     private static GameObject fruitBarObj;
 
+    public CameraConfig cameraWhichLooksForRabbit;
+
     private int lives;
     private int coinsCollected;
     private int fruitsCollected;
+
+    public Sprite notLife, life, blueCrystal, redCrystal, greenCrystal;
 
     internal void fruitWasCollected()
     {
@@ -34,7 +37,21 @@ public class LevelController : MonoBehaviour
 
         GameObject crystalToChange = crystalsBar.transform.Find(type + "").gameObject;
 
-        crystalToChange.GetComponent<UI2DSprite>().sprite2D = (Sprite)AssetDatabase.LoadAssetAtPath("Assets/Content/Images/Collectables/" + type + ".png", typeof(Sprite));
+        crystalToChange.GetComponent<UI2DSprite>().sprite2D = GetCrystalByType(type);
+    }
+
+    private Sprite GetCrystalByType(Crystal.TypeOfCrystal type)
+    {
+        if(type == Crystal.TypeOfCrystal.Blue)
+        { return blueCrystal; }
+
+        if (type == Crystal.TypeOfCrystal.Red)
+        { return redCrystal; }
+
+        if (type == Crystal.TypeOfCrystal.Green)
+        { return greenCrystal; }
+
+        return null;
     }
 
     public void setStartPosition(Vector3 pos)
@@ -85,10 +102,21 @@ public class LevelController : MonoBehaviour
 
     public void onRabitDeath(RabbitController rabit)
     {
-        if(lives == 0)
-        { SceneManager.LoadScene("chooseLevel"); }
+        if (SceneManager.GetActiveScene().name == "chooseLevel")
+        {
+            moveRabbitToTheStartingPosition(rabit);
+            return;
+        }
+
+
+        if (lives == 0)
+        {
+            cameraWhichLooksForRabbit.playSoundRabbitDies();
+            SceneManager.LoadScene("chooseLevel");
+        }
         else
         {
+            cameraWhichLooksForRabbit.playSoundRabbitDies();
             decrementLives();
             moveRabbitToTheStartingPosition(rabit);
 
@@ -112,7 +140,7 @@ public class LevelController : MonoBehaviour
 
         GameObject heartToChange = lifeBar.transform.Find(lives + "").gameObject;
 
-        heartToChange.GetComponent<UI2DSprite>().sprite2D = (Sprite)AssetDatabase.LoadAssetAtPath("Assets/Content/UI/level/notLife.png", typeof(Sprite));
+        heartToChange.GetComponent<UI2DSprite>().sprite2D = notLife;
     }
 
     public static GameObject getRabbit()

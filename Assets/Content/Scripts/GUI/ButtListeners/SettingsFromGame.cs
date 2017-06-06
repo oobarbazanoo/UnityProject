@@ -14,6 +14,6 @@ public class SettingsFromGame : MonoBehaviour
 
     void whenClickOccured()
     {
-        Debug.Log("settings from game");
+        SettingsFromMenu.current.showSettings();
     }
 }

@@ -91,6 +91,8 @@ public class GreenEnemy : Enemy
         animateController.animate("run", false);
         animateController.animate("jump", false);
 
+        rabbitStats.isDead = true;
+
         animateController.animate("die", true);
         rabbitStats.isDead = true;
     }

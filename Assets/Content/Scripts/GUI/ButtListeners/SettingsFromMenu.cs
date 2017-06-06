@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class SettingsFromMenu : MonoBehaviour
 {
-
     public ClickTrigger clickTrigger;
+
+    public GameObject settingsPrefab;
+
+    public static SettingsFromMenu current;
+
+    private void Awake()
+    {
+        current = this;
+    }
 
     void Start()
     {
@@ -15,6 +23,13 @@ public class SettingsFromMenu : MonoBehaviour
 
     void whenClickOccured()
     {
-        Debug.Log("settings");
+        showSettings();
+    }
+
+    public void showSettings()
+    {
+        GameObject parent = UICamera.first.transform.parent.gameObject;
+        GameObject obj = NGUITools.AddChild(parent, settingsPrefab);
+        PopUpWindowConfig popup = obj.GetComponent<PopUpWindowConfig>();
     }
 }

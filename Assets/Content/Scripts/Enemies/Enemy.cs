@@ -140,6 +140,7 @@ public class Enemy : MonoBehaviour
             }
             else
             {
+                LevelController.current.cameraWhichLooksForRabbit.playSoundEnemyAttacks();
                 DoFight();
                 return;
             }

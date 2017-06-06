@@ -52,6 +52,8 @@ public class RabbitController : MonoBehaviour
 
     void FixedUpdate()
     {
+        CameraConfig cameraWhichFollowsUs = LevelController.current.cameraWhichLooksForRabbit;
+
         if (this.isVulnerable)
         {
             Physics2D.IgnoreLayerCollision(11, 10, false);
@@ -65,11 +67,15 @@ public class RabbitController : MonoBehaviour
         float value = Input.GetAxis("Horizontal");
             if (Mathf.Abs(value) > 0)
             {
+                cameraWhichFollowsUs.playSoundRabbitWalks();
                 moveBody(value);
                 animateController.animate("run", true);
             }
             else
-            { animateController.animate("run", false); }
+            {
+                cameraWhichFollowsUs.stopSoundRabbitWalks();
+                animateController.animate("run", false);
+            }
 
             if (value < 0)
             {
@@ -133,7 +139,10 @@ public class RabbitController : MonoBehaviour
             }
 
             if (this.isGrounded)
-            { animateController.animate("jump", false); }
+            {
+                cameraWhichFollowsUs.playSoundRabbitFalls();
+                animateController.animate("jump", false);
+            }
             else
             { animateController.animate("jump", true); }
     }
