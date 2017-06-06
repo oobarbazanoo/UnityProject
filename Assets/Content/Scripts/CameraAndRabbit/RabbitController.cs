@@ -21,6 +21,8 @@ public class RabbitController : MonoBehaviour
     public float MaxJumpTime = 2f;
     public float JumpSpeed = 2f;
 
+    private bool shouldPlayFallSound;
+
     void Awake()
     {
         LevelController.SetRabbit(this.gameObject);
@@ -29,6 +31,7 @@ public class RabbitController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        shouldPlayFallSound = false;
         isVulnerable = true;
         invulnerabilityTime = 4f;
         _invulnerabilityTime = invulnerabilityTime;
@@ -95,6 +98,12 @@ public class RabbitController : MonoBehaviour
             {
                 isGrounded = true;
 
+                if (shouldPlayFallSound)
+                {
+                    shouldPlayFallSound = false;
+                    cameraWhichFollowsUs.playSoundRabbitFalls();
+                }
+                
                 //Перевіряємо чи ми опинились на платформі
                 if (hit.transform != null && hit.transform.GetComponent<MovingPlatform>() != null)
                 {
@@ -105,7 +114,7 @@ public class RabbitController : MonoBehaviour
             else
             {
                 isGrounded = false;
-
+                shouldPlayFallSound = true;
                 SetNewParent(this.transform, this.parent);
             }
 
@@ -139,10 +148,7 @@ public class RabbitController : MonoBehaviour
             }
 
             if (this.isGrounded)
-            {
-                cameraWhichFollowsUs.playSoundRabbitFalls();
-                animateController.animate("jump", false);
-            }
+            { animateController.animate("jump", false);}
             else
             { animateController.animate("jump", true); }
     }

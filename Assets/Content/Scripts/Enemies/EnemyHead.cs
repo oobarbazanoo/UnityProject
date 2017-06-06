@@ -19,7 +19,7 @@ public class EnemyHead : MonoBehaviour
         { return; }
 
         this.gameObject.transform.parent.gameObject.GetComponent<Enemy>().DieFromRabbit();
-
+        LevelController.current.cameraWhichLooksForRabbit.stopSoundEnemyAttacks();
         rabbit.GetComponent<Rigidbody2D>().AddForce(Vector3.up*12, ForceMode2D.Impulse);
     }
 

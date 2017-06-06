@@ -13,6 +13,15 @@ public class PopUpWindowConfig : MonoBehaviour
     {
         addListenersToButts();  
         Time.timeScale = 0;
+
+        setInitialSpritesForSettingsButtons();
+    }
+
+    private void setInitialSpritesForSettingsButtons()
+    {
+        SoundManager sm = SoundManager.Instance;
+        setSpriteForSoundButton(sm.isSoundOn());
+        setSpriteForMusicButton(sm.isMusicOn());
     }
 
     private void addListenersToButts()
@@ -33,10 +42,15 @@ public class PopUpWindowConfig : MonoBehaviour
 
         sm.setSound(newVal);
 
-        if(newVal)
-        {buttSound.GetComponent<UI2DSprite>().sprite2D = soundOnSprite;}
+        setSpriteForSoundButton(newVal);
+    }
+
+    private void setSpriteForSoundButton(bool newVal)
+    {
+        if (newVal)
+        { changeButtonsSprite(buttSound.GetComponent<UIButton>(), soundOnSprite); }
         else
-        {buttSound.GetComponent<UI2DSprite>().sprite2D = soundOffSprite;}
+        { changeButtonsSprite(buttSound.GetComponent<UIButton>(), soundOffSprite); }
     }
 
     private void toggleMusic()
@@ -47,10 +61,15 @@ public class PopUpWindowConfig : MonoBehaviour
 
         sm.setMusic(newVal);
 
+        setSpriteForMusicButton(newVal);
+    }
+
+    private void setSpriteForMusicButton(bool newVal)
+    {
         if (newVal)
-        {changeButtonsSprite(buttMusic.GetComponent<UIButton>(), musicOnSprite);}
+        { changeButtonsSprite(buttMusic.GetComponent<UIButton>(), musicOnSprite); }
         else
-        {changeButtonsSprite(buttMusic.GetComponent<UIButton>(), musicOffSprite);}
+        { changeButtonsSprite(buttMusic.GetComponent<UIButton>(), musicOffSprite); }
     }
 
     private void changeButtonsSprite(UIButton buttonToChangeSprite, Sprite newSprite)

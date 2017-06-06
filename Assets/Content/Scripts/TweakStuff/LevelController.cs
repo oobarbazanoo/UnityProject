@@ -102,26 +102,37 @@ public class LevelController : MonoBehaviour
 
     public void onRabitDeath(RabbitController rabit)
     {
+        current.cameraWhichLooksForRabbit.followRabbit = false;
+        rabit.enabled = false;
+        cameraWhichLooksForRabbit.playSoundRabbitDies();
+        StartCoroutine(MoveAtTheBeginningLater(rabit));
+    }
+
+    System.Collections.IEnumerator MoveAtTheBeginningLater(RabbitController rabit)
+    {
+        yield return new WaitForSeconds(4f);
+        LevelController.current.cameraWhichLooksForRabbit.followRabbit = true;
+        rabit.enabled = true;
+        rabit.gameObject.GetComponent<AnimateController>().animate("die", false);
         if (SceneManager.GetActiveScene().name == "chooseLevel")
         {
             moveRabbitToTheStartingPosition(rabit);
-            return;
-        }
-
-
-        if (lives == 0)
-        {
-            cameraWhichLooksForRabbit.playSoundRabbitDies();
-            SceneManager.LoadScene("chooseLevel");
+            yield break;
         }
         else
-        {
-            cameraWhichLooksForRabbit.playSoundRabbitDies();
-            decrementLives();
-            moveRabbitToTheStartingPosition(rabit);
+        { 
+            if (lives == 0)
+            {
+                SceneManager.LoadScene("chooseLevel");
+            }
+            else
+            {
+                decrementLives();
+                moveRabbitToTheStartingPosition(rabit);
 
-            RabbitStats rabbitStats = rabit.gameObject.GetComponent<RabbitStats>();
-            rabbitStats.isDead = false;
+                RabbitStats rabbitStats = rabit.gameObject.GetComponent<RabbitStats>();
+                rabbitStats.isDead = false;
+            }
         }
     }
 

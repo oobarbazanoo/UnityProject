@@ -13,7 +13,6 @@ public class DeathHere : MonoBehaviour
         //Впасти міг не тільки кролик
         if (rabit != null)
         {
-            LevelController.current.cameraWhichLooksForRabbit.followRabbit = false;
             RabbitStats stats = rabit.gameObject.GetComponent<RabbitStats>();
             if (stats.rabbitSize == 1)
             {
@@ -21,15 +20,8 @@ public class DeathHere : MonoBehaviour
                 makeRabbitSmaller(rabit);
             }
 
-            StartCoroutine(moveAtTheBeginningLater(rabit));
+            LevelController.current.onRabitDeath(rabit);
         }
-    }
-
-    IEnumerator moveAtTheBeginningLater(RabbitController rabit)
-    {
-        yield return new WaitForSeconds(1.5f);
-        LevelController.current.cameraWhichLooksForRabbit.followRabbit = true;
-        LevelController.current.onRabitDeath(rabit);
     }
 
     private void makeRabbitSmaller(RabbitController rabit)

@@ -60,28 +60,52 @@ public class CameraConfig : MonoBehaviour
     }
 
     public void playSoundRabbitWalks()
-    {rabbitWalksSrc.Play();}
+    {
+        if (!rabbitWalksSrc.isPlaying)
+        { rabbitWalksSrc.Play(); }
+    }
 
     public void playSoundRabbitDies()
-    { rabbitDiesSrc.Play(); }
+    {
+        if (!rabbitDiesSrc.isPlaying)
+        { rabbitDiesSrc.Play(); }
+    }
 
     public void playSoundRabbitFalls()
-    { rabbitFallsSrc.Play(); }
+    {
+        if (!rabbitFallsSrc.isPlaying)
+        { rabbitFallsSrc.Play(); }
+    }
 
     public void playSoundEnemyAttacks()
-    { enemyAttacksSrc.Play(); }
+    {
+        if (!enemyAttacksSrc.isPlaying)
+        { enemyAttacksSrc.Play(); }
+    }
 
     public void stopSoundRabbitWalks()
-    {rabbitWalksSrc.Stop();}
+    {
+        if (rabbitWalksSrc.isPlaying)
+        { rabbitWalksSrc.Stop(); }
+    }
 
     public void stopSoundRabbitDies()
-    { rabbitDiesSrc.Stop(); }
+    {
+        if (rabbitDiesSrc.isPlaying)
+        { rabbitDiesSrc.Stop(); }
+    }
 
     public void stopSoundRabbitFalls()
-    {rabbitFallsSrc.Stop();}
+    {
+        if (rabbitFallsSrc.isPlaying)
+        { rabbitFallsSrc.Stop(); }
+    }
 
     public void stopSoundEnemyAttacks()
-    {enemyAttacksSrc.Stop();}
+    {
+        if (enemyAttacksSrc.isPlaying)
+        { enemyAttacksSrc.Stop(); }
+    }
 
     private void checkMusicAndStopOrStartIfNecessary()
     {

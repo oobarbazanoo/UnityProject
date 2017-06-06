@@ -15,15 +15,14 @@ public class AnimateController : MonoBehaviour
     public void animate(string what, bool toAnimate)
     { animator.SetBool(what, toAnimate); }
 
-    public void disableRabbitMovements()
+    public void whenAnimationOfDeathStarts()
     {
+        LevelController.current.onRabitDeath(rabbit);
         rabbit.enabled = false;
     }
 
     public void whenAnimationOfDeathEnds()
     {
-        animate("die", false);
-        rabbit.enabled = true;
-        LevelController.current.onRabitDeath(rabbit);
+        
     }
 }
