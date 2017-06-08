@@ -70,7 +70,8 @@ public class RabbitController : MonoBehaviour
         float value = Input.GetAxis("Horizontal");
             if (Mathf.Abs(value) > 0)
             {
-                cameraWhichFollowsUs.playSoundRabbitWalks();
+                if (isGrounded)
+                { cameraWhichFollowsUs.playSoundRabbitWalks(); }
                 moveBody(value);
                 animateController.animate("run", true);
             }

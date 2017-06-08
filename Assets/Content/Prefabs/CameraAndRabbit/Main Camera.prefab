@@ -112,6 +112,7 @@ MonoBehaviour:
   rabbitDiesSound: {fileID: 8300000, guid: 7553580dee44e4f96b2efa5f4e5e17c3, type: 3}
   rabbitFallsSound: {fileID: 8300000, guid: 4678dc960a2b949329a55d696cf4ec68, type: 3}
   enemyAttacksSound: {fileID: 8300000, guid: 17ceaa42e8466455b8b6886e78c357f9, type: 3}
+  soundOfTheVictory: {fileID: 8300000, guid: dee792aa118e04f4f93fb651e2693ac9, type: 3}
 --- !u!124 &124516288055251116
 Behaviour:
   m_ObjectHideFlags: 1

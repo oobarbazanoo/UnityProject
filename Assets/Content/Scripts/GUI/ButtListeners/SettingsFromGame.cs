@@ -5,6 +5,7 @@ using UnityEngine;
 public class SettingsFromGame : MonoBehaviour
 {
     public ClickTrigger clickTrigger;
+    public GameObject settingsPrefab;
 
     void Start()
     {
@@ -14,6 +15,8 @@ public class SettingsFromGame : MonoBehaviour
 
     void whenClickOccured()
     {
-        SettingsFromMenu.current.showSettings();
+        GameObject parent = UICamera.first.transform.parent.gameObject;
+        GameObject obj = NGUITools.AddChild(parent, settingsPrefab);
+        PopUpWindowConfig popup = obj.GetComponent<PopUpWindowConfig>();
     }
 }

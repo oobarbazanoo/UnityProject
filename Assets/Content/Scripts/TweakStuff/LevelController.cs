@@ -14,11 +14,11 @@ public class LevelController : MonoBehaviour
 
     public CameraConfig cameraWhichLooksForRabbit;
 
-    private int lives;
-    private int coinsCollected;
-    private int fruitsCollected;
+    public int lives, coinsCollected,fruitsCollected;
 
     public Sprite notLife, life, blueCrystal, redCrystal, greenCrystal;
+
+    public bool[] brgCrystalsCollected = { false, false, false };
 
     internal void fruitWasCollected()
     {
@@ -38,6 +38,18 @@ public class LevelController : MonoBehaviour
         GameObject crystalToChange = crystalsBar.transform.Find(type + "").gameObject;
 
         crystalToChange.GetComponent<UI2DSprite>().sprite2D = GetCrystalByType(type);
+
+        checkCrystalInArray(type);
+    }
+
+    private void checkCrystalInArray(Crystal.TypeOfCrystal type)
+    {
+        if (type == Crystal.TypeOfCrystal.Blue)
+        { brgCrystalsCollected[0] = true; }
+        else if (type == Crystal.TypeOfCrystal.Red)
+        { brgCrystalsCollected[1] = true; }
+        else if (type == Crystal.TypeOfCrystal.Green)
+        { brgCrystalsCollected[2] = true; }
     }
 
     private Sprite GetCrystalByType(Crystal.TypeOfCrystal type)

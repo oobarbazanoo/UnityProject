@@ -17,10 +17,14 @@ public class CameraConfig : MonoBehaviour
 
         setMusicSource();
         setSoundSources();
+        setWonPanelSource();
     }
 
-    public AudioClip music, rabbitWalksSound, rabbitDiesSound, rabbitFallsSound, enemyAttacksSound;
-    private AudioSource musicSrc, rabbitWalksSrc, rabbitDiesSrc, rabbitFallsSrc, enemyAttacksSrc;
+    public AudioClip music, rabbitWalksSound, rabbitDiesSound, rabbitFallsSound, enemyAttacksSound, soundOfTheVictory;
+    private AudioSource musicSrc, rabbitWalksSrc, rabbitDiesSrc, rabbitFallsSrc, enemyAttacksSrc, soundOfTheVictorySrc;
+
+    private void setWonPanelSource()
+    { setClipForSrc(ref soundOfTheVictorySrc, soundOfTheVictory, false);}
 
     private void setMusicSource()
     {setClipForSrc(ref musicSrc, music, true);}
@@ -83,6 +87,12 @@ public class CameraConfig : MonoBehaviour
         { enemyAttacksSrc.Play(); }
     }
 
+    public void playSoundOfTheVictory()
+    {
+        if (!soundOfTheVictorySrc.isPlaying)
+        { soundOfTheVictorySrc.Play(); }
+    }
+
     public void stopSoundRabbitWalks()
     {
         if (rabbitWalksSrc.isPlaying)
@@ -105,6 +115,12 @@ public class CameraConfig : MonoBehaviour
     {
         if (enemyAttacksSrc.isPlaying)
         { enemyAttacksSrc.Stop(); }
+    }
+
+    public void stopSoundOfTheVictory()
+    {
+        if (soundOfTheVictorySrc.isPlaying)
+        { soundOfTheVictorySrc.Stop(); }
     }
 
     private void checkMusicAndStopOrStartIfNecessary()
