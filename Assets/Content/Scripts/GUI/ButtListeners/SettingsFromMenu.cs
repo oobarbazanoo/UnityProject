@@ -29,7 +29,6 @@ public class SettingsFromMenu : MonoBehaviour
     public void showSettings()
     {
         GameObject parent = UICamera.first.transform.parent.gameObject;
-        GameObject obj = NGUITools.AddChild(parent, settingsPrefab);
-        PopUpWindowConfig popup = obj.GetComponent<PopUpWindowConfig>();
+        NGUITools.AddChild(parent, settingsPrefab);
     }
 }

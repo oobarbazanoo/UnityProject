@@ -1548,7 +1548,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a3410d41f21e83469ac5600104cf89f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfFruitsInScene: 2
 --- !u!114 &114992163009040790
 MonoBehaviour:
   m_ObjectHideFlags: 1

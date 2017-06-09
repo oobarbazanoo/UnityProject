@@ -16,7 +16,6 @@ public class SettingsFromGame : MonoBehaviour
     void whenClickOccured()
     {
         GameObject parent = UICamera.first.transform.parent.gameObject;
-        GameObject obj = NGUITools.AddChild(parent, settingsPrefab);
-        PopUpWindowConfig popup = obj.GetComponent<PopUpWindowConfig>();
+        NGUITools.AddChild(parent, settingsPrefab);
     }
 }

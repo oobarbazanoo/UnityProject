@@ -9,7 +9,11 @@ public class CameraConfig : MonoBehaviour
 
     public bool followRabbit;
 
-    // Use this for initialization
+    public AudioClip music, rabbitWalksSound, rabbitDiesSound, rabbitFallsSound,
+                     enemyAttacksSound, soundOfTheVictory, soundOfTheLosing;
+    private AudioSource musicSrc, rabbitWalksSrc, rabbitDiesSrc, rabbitFallsSrc,
+                        enemyAttacksSrc, soundOfTheVictorySrc, soundOfTheLosingSrc;
+
     void Start()
     {
         followRabbit = true;
@@ -18,10 +22,11 @@ public class CameraConfig : MonoBehaviour
         setMusicSource();
         setSoundSources();
         setWonPanelSource();
+        setLosingPanelSource();
     }
 
-    public AudioClip music, rabbitWalksSound, rabbitDiesSound, rabbitFallsSound, enemyAttacksSound, soundOfTheVictory;
-    private AudioSource musicSrc, rabbitWalksSrc, rabbitDiesSrc, rabbitFallsSrc, enemyAttacksSrc, soundOfTheVictorySrc;
+    private void setLosingPanelSource()
+    { setClipForSrc(ref soundOfTheLosingSrc, soundOfTheLosing, false); }
 
     private void setWonPanelSource()
     { setClipForSrc(ref soundOfTheVictorySrc, soundOfTheVictory, false);}
@@ -65,32 +70,43 @@ public class CameraConfig : MonoBehaviour
 
     public void playSoundRabbitWalks()
     {
-        if (!rabbitWalksSrc.isPlaying)
+        if (!rabbitWalksSrc.isPlaying && soundIsOn())
         { rabbitWalksSrc.Play(); }
+    }
+
+    private bool soundIsOn()
+    {
+        return SoundManager.Instance.isSoundOn();
     }
 
     public void playSoundRabbitDies()
     {
-        if (!rabbitDiesSrc.isPlaying)
+        if (!rabbitDiesSrc.isPlaying && soundIsOn())
         { rabbitDiesSrc.Play(); }
     }
 
     public void playSoundRabbitFalls()
     {
-        if (!rabbitFallsSrc.isPlaying)
+        if (!rabbitFallsSrc.isPlaying && soundIsOn())
         { rabbitFallsSrc.Play(); }
     }
 
     public void playSoundEnemyAttacks()
     {
-        if (!enemyAttacksSrc.isPlaying)
+        if (!enemyAttacksSrc.isPlaying && soundIsOn())
         { enemyAttacksSrc.Play(); }
     }
 
     public void playSoundOfTheVictory()
     {
-        if (!soundOfTheVictorySrc.isPlaying)
+        if (!soundOfTheVictorySrc.isPlaying && soundIsOn())
         { soundOfTheVictorySrc.Play(); }
+    }
+
+    public void playSoundOfTheLosing()
+    {
+        if (!soundOfTheLosingSrc.isPlaying && soundIsOn())
+        { soundOfTheLosingSrc.Play(); }
     }
 
     public void stopSoundRabbitWalks()
@@ -121,6 +137,12 @@ public class CameraConfig : MonoBehaviour
     {
         if (soundOfTheVictorySrc.isPlaying)
         { soundOfTheVictorySrc.Stop(); }
+    }
+
+    public void stopSoundOfTheLosing()
+    {
+        if (soundOfTheLosingSrc.isPlaying)
+        { soundOfTheLosingSrc.Stop(); }
     }
 
     private void checkMusicAndStopOrStartIfNecessary()

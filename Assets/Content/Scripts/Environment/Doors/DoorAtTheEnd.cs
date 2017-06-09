@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class DoorAtTheEnd : MonoBehaviour
@@ -16,9 +17,14 @@ public class DoorAtTheEnd : MonoBehaviour
 
     public void showWonPanel ()
     {
+        checkInAllLevelInfo();
         Time.timeScale = 0;
         GameObject parent = UICamera.first.transform.parent.gameObject;
-        GameObject obj = NGUITools.AddChild(parent, wonMenuPrefab);
-        WonPanel wonWindow = obj.GetComponent<WonPanel>();
+        NGUITools.AddChild(parent, wonMenuPrefab);
+    }
+
+    private void checkInAllLevelInfo()
+    {
+        LevelStats.Instance.passedLevelNumber(LevelController.current.lvlNumber);
     }
 }

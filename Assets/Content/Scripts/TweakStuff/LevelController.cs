@@ -1,9 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
+    public Fruit[] allFruitsOnTheLevel;
+
+    public int lvlNumber;
+
+    public SpriteRenderer lockSprite;
+
     Vector3 startingPosition;
     private static GameObject rabbitObj;
 
@@ -14,11 +21,13 @@ public class LevelController : MonoBehaviour
 
     public CameraConfig cameraWhichLooksForRabbit;
 
-    public int lives, coinsCollected,fruitsCollected;
+    public int lives, coinsAlreadyCollected, coinsWhichWillBeCollected, fruitsCollected, crystalsCollected;
 
     public Sprite notLife, life, blueCrystal, redCrystal, greenCrystal;
 
     public bool[] brgCrystalsCollected = { false, false, false };
+
+    public GameObject lostPrefab;
 
     internal void fruitWasCollected()
     {
@@ -28,18 +37,32 @@ public class LevelController : MonoBehaviour
 
         FruitBar fruitBarScript = fruitBar.GetComponent<FruitBar>();
 
-        fruitBarScript.writeToLabel(fruitsCollected + "/" + fruitBarScript.numberOfFruitsInScene);
+        fruitBarScript.writeToLabel(fruitsCollected + "/" + LevelController.current.allFruitsOnTheLevel.Length);
     }
 
     internal void crystalWasCollected(Crystal.TypeOfCrystal type)
     {
         GameObject crystalsBar = GetCrystalsBar();
 
+        crystalsCollected++;
+
         GameObject crystalToChange = crystalsBar.transform.Find(type + "").gameObject;
 
         crystalToChange.GetComponent<UI2DSprite>().sprite2D = GetCrystalByType(type);
 
         checkCrystalInArray(type);
+    }
+
+    internal bool[] fruitsCollectedBoolArray()
+    {
+        bool[] res = new bool[allFruitsOnTheLevel.Length];
+
+        for(int i = 0; i < res.Length; i++)
+        {
+            res[i] = allFruitsOnTheLevel[i].collected;
+        }
+
+        return res;
     }
 
     private void checkCrystalInArray(Crystal.TypeOfCrystal type)
@@ -135,7 +158,8 @@ public class LevelController : MonoBehaviour
         { 
             if (lives == 0)
             {
-                SceneManager.LoadScene("chooseLevel");
+                GameObject parent = UICamera.first.transform.parent.gameObject;
+                NGUITools.AddChild(parent, lostPrefab);
             }
             else
             {
@@ -174,17 +198,22 @@ public class LevelController : MonoBehaviour
     {
         current = this;
         lives = 3;
+        crystalsCollected = 0;
         fruitsCollected = 0;
     }
 
     public void coinCollected()
     {
-        this.coinsCollected++;
+        this.coinsWhichWillBeCollected++;
+        this.coinsAlreadyCollected++;
         incrementCoinsInBar();
     }
 
     private void incrementCoinsInBar()
     {
+        if (coinsBarObj == null)
+        { return; }
+
         UILabel labelWithNumberOfCoins = coinsBarObj.transform.Find("Label").gameObject.GetComponent<UILabel>();
         labelWithNumberOfCoins.text = makeNumberOfCoinsAnAppropriateString();
     }
@@ -193,7 +222,7 @@ public class LevelController : MonoBehaviour
     {
         string res = "";
 
-        string withoutSpacesYet = this.coinsCollected + "";
+        string withoutSpacesYet = this.coinsAlreadyCollected + "";
 
         for (int i = 0; i < 7; i++)
         {
@@ -222,11 +251,45 @@ public class LevelController : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        this.coinsCollected = 0;	
+
+        configCoins();
+        configFruits();
+        
+        if(lockSprite != null)
+        { configDoorWithLock(); }
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    private void configFruits()
+    {
+        bool[] arrayForFruits = LevelStats.Instance.getFruitPrevBoolArray(this.lvlNumber);
+        bool[] fruitsCollectedBoolArr = fruitsCollectedBoolArray();
+
+        if ((arrayForFruits == null) || (arrayForFruits.Length != fruitsCollectedBoolArr.Length))
+        { }
+        else
+        {
+            for(int i = 0; i < arrayForFruits.Length; i++)
+            {
+                if(arrayForFruits[i])
+                {
+                    allFruitsOnTheLevel[i].makeTranslucent();
+                }
+            }
+        }
+    }
+
+    private void configCoins()
+    {
+        this.coinsAlreadyCollected = LevelStats.Instance.getWholeNumberOfCollectedCoins();
+        incrementCoinsInBar();
+        this.coinsWhichWillBeCollected = 0;
+    }
+
+    private void configDoorWithLock()
+    {
+        bool getRidOfLock = LevelStats.Instance.isSecondLevelAvailable();
+
+        if (getRidOfLock)
+        { lockSprite.sprite = null; }
+    }
 }

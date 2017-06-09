@@ -5,15 +5,17 @@ using UnityEngine;
 
 public class FruitBar : MonoBehaviour
 {
-    public int numberOfFruitsInScene;
-
     private UILabel label;
 
     void Awake()
     {
         LevelController.SetFruitBar(this.gameObject);
         setLabel();
-        writeToLabel("0/"+numberOfFruitsInScene);
+    }
+
+    private void Start()
+    {
+        writeToLabel("0/" + LevelController.current.allFruitsOnTheLevel.Length);
     }
 
     private void setLabel()

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class WonPanel : MonoBehaviour
+public class LostPanel : MonoBehaviour
 {
     public ClickTrigger background, buttClose, buttMenu, buttRetry;
 
@@ -12,28 +12,19 @@ public class WonPanel : MonoBehaviour
 
     public GameObject crystalsHolder;
 
-    public UILabel numberOfFruit, numberOfCoins;
-
     void Start()
     {
-        LevelController.current.cameraWhichLooksForRabbit.playSoundOfTheVictory(); 
+        LevelController.current.cameraWhichLooksForRabbit.playSoundOfTheLosing();
         initializeCrystalSprites();
-        initializeFruitsAndCoinsStat();
         addListenersToButts();
         Time.timeScale = 0;
-    }
-
-    private void initializeFruitsAndCoinsStat()
-    {
-        numberOfCoins.text = "+ " + LevelController.current.coinsWhichWillBeCollected;
-        numberOfFruit.text = LevelController.current.fruitsCollected + "/" + LevelController.current.allFruitsOnTheLevel.Length;
     }
 
     private void initializeCrystalSprites()
     {
         bool[] collected = LevelController.current.brgCrystalsCollected;
 
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             if (!collected[i])
             { setToNoCrystal(i); }
