@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class LevelStats : MonoBehaviour
 {
+
+    private const string SAVE_LVL_MARK = "lvlInfo", SAVE_COINS_MARK = "coinsInfo";
     public static LevelStats Instance;
 
     private void Awake()
@@ -25,6 +27,35 @@ public class LevelStats : MonoBehaviour
         LevelInfo prevInfo = getPrevInfo("1");
         return prevInfo.passedTheWholeLevelOnce;
     }
+
+    public bool isPassedLvlNumber(string lvlNumber)
+    {
+        LevelInfo prevInfo = getPrevInfo(lvlNumber);
+        return prevInfo.passedTheWholeLevelOnce;
+    }
+
+    public bool isCollectedCrystalsLvlNumber(string lvlNumber)
+    {
+        LevelInfo prevInfo = getPrevInfo(lvlNumber);
+        return prevInfo.collectedAllCrystalsOnTheLevel;
+    }
+
+    public bool isCollectedFruitsLvlNumber(string lvlNumber)
+    {
+        LevelInfo prevInfo = getPrevInfo(lvlNumber);
+        bool[] collectedFruits = prevInfo.fruitsWhichWereCollected;
+
+        if (collectedFruits == null)
+        { return false; }
+
+        foreach (bool collectedThisOne in collectedFruits)
+        {
+            if (!collectedThisOne)
+            { return false; }
+        }
+        return true;
+    }
+
 
     private void saveLvl(string lvlNumber)
     {
@@ -59,7 +90,7 @@ public class LevelStats : MonoBehaviour
 
     private LevelInfo getPrevInfo(string numberOfTheLevel)
     {
-        string str = PlayerPrefs.GetString("LevelInfo" + numberOfTheLevel, null);
+        string str = PlayerPrefs.GetString(SAVE_LVL_MARK + numberOfTheLevel, null);
         LevelInfo prevInfo = JsonUtility.FromJson<LevelInfo>(str);
         if (prevInfo == null)
         { prevInfo = new LevelInfo(); }
@@ -69,14 +100,14 @@ public class LevelStats : MonoBehaviour
     private void saveInfo(string numberOfTheLevel, LevelInfo info)
     {
         string str = JsonUtility.ToJson(info);
-        PlayerPrefs.SetString("LevelInfo" + numberOfTheLevel, str);
+        PlayerPrefs.SetString(SAVE_LVL_MARK + numberOfTheLevel, str);
     }
 
     public int getWholeNumberOfCollectedCoins()
-    {return PlayerPrefs.GetInt("allCoinsWhichWereCollected", 0);}
+    {return PlayerPrefs.GetInt(SAVE_COINS_MARK, 0);}
 
     private void setNewNumberOfCollectedCoins(int newAmount)
-    { PlayerPrefs.SetInt("allCoinsWhichWereCollected", newAmount); }
+    { PlayerPrefs.SetInt(SAVE_COINS_MARK, newAmount); }
 
     internal bool[] getFruitPrevBoolArray(int lvlNumber)
     {

@@ -11,6 +11,9 @@ public class LevelController : MonoBehaviour
 
     public SpriteRenderer lockSprite;
 
+    public SpriteRenderer check1LvlSprite, crystals1LvlSprite, fruits1LvlSprite,
+                          check2LvlSprite, crystals2LvlSprite, fruits2LvlSprite;
+
     Vector3 startingPosition;
     private static GameObject rabbitObj;
 
@@ -23,7 +26,7 @@ public class LevelController : MonoBehaviour
 
     public int lives, coinsAlreadyCollected, coinsWhichWillBeCollected, fruitsCollected, crystalsCollected;
 
-    public Sprite notLife, life, blueCrystal, redCrystal, greenCrystal;
+    public Sprite notLife, life, blueCrystal, redCrystal, greenCrystal, greenFruit;
 
     public bool[] brgCrystalsCollected = { false, false, false };
 
@@ -190,6 +193,26 @@ public class LevelController : MonoBehaviour
         heartToChange.GetComponent<UI2DSprite>().sprite2D = notLife;
     }
 
+    internal void addALife()
+    {
+        if (lives == 3)
+        { return; }
+        else
+        {
+            lives++;
+            incrementLivesInLifebar();
+        }
+    }
+
+    private void incrementLivesInLifebar()
+    {
+        GameObject lifeBar = GetLifeBar();
+
+        GameObject heartToChange = lifeBar.transform.Find(lives + "").gameObject;
+
+        heartToChange.GetComponent<UI2DSprite>().sprite2D = life;
+    }
+
     public static GameObject getRabbit()
     {return rabbitObj;}
 
@@ -256,8 +279,42 @@ public class LevelController : MonoBehaviour
         configFruits();
         
         if(lockSprite != null)
-        { configDoorWithLock(); }
+        {
+            configDoorWithLock();
+            configDoorsInfo();
+        }
+
 	}
+
+    private void configDoorsInfo()
+    {
+        configFirstDoor();
+        configSecondDoor();
+    }
+
+    private void configSecondDoor()
+    {
+        if (!LevelStats.Instance.isPassedLvlNumber("2"))
+        { check2LvlSprite.sprite = null; }
+
+        if (LevelStats.Instance.isCollectedCrystalsLvlNumber("2"))
+        { crystals2LvlSprite.sprite = blueCrystal; }
+
+        if (LevelStats.Instance.isCollectedFruitsLvlNumber("2"))
+        { fruits2LvlSprite.sprite = greenFruit; }
+    }
+
+    private void configFirstDoor()
+    {
+        if (!LevelStats.Instance.isPassedLvlNumber("1"))
+        { check1LvlSprite.sprite = null; }
+
+        if (LevelStats.Instance.isCollectedCrystalsLvlNumber("1"))
+        { crystals1LvlSprite.sprite = blueCrystal; }
+
+        if (LevelStats.Instance.isCollectedFruitsLvlNumber("1"))
+        { fruits1LvlSprite.sprite = greenFruit; }
+    }
 
     private void configFruits()
     {
