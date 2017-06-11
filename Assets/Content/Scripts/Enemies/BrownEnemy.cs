@@ -32,7 +32,7 @@ public class BrownEnemy : Enemy
 
 	protected override void AttackTheRabbit(GameObject rabbit)
 	{
-		if (isDead)
+        if (isDead || base.attacking || rabbitStats.isDead)
 		{ return; }
 
 		Vector3 rabbitPosition = rabbit.GetComponent<Transform>().position;
@@ -73,7 +73,9 @@ public class BrownEnemy : Enemy
 	private void ThrowCarrot(GameObject rabbit)
 	{
 		base.StopAllAnimations();
+        base.attacking = true;
 		base.AnimateOnce("attack");
+
 
 		//Створюємо копію Prefab
 		GameObject obj = GameObject.Instantiate(this.prefabCarrot);

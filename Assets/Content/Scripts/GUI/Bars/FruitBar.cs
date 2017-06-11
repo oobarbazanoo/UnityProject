@@ -15,7 +15,7 @@ public class FruitBar : MonoBehaviour
 
     private void Start()
     {
-        writeToLabel("0/" + LevelController.current.allFruitsOnTheLevel.Length);
+        writeToLabel("0/" + LevelController.current.allFruitsOnTheLvl.Length);
     }
 
     private void setLabel()

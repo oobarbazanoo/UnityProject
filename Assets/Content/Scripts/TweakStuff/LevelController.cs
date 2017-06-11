@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
-    public Fruit[] allFruitsOnTheLevel;
+    public Fruit[] allFruitsOnTheLvl;
 
     public int lvlNumber;
 
@@ -21,6 +21,8 @@ public class LevelController : MonoBehaviour
     private static GameObject coinsBarObj;
     private static GameObject crystalsBarObj;
     private static GameObject fruitBarObj;
+
+    public GameObject fruitFromEnvironment;
 
     public CameraConfig cameraWhichLooksForRabbit;
 
@@ -40,7 +42,7 @@ public class LevelController : MonoBehaviour
 
         FruitBar fruitBarScript = fruitBar.GetComponent<FruitBar>();
 
-        fruitBarScript.writeToLabel(fruitsCollected + "/" + LevelController.current.allFruitsOnTheLevel.Length);
+        fruitBarScript.writeToLabel(fruitsCollected + "/" + this.allFruitsOnTheLvl.Length);
     }
 
     internal void crystalWasCollected(Crystal.TypeOfCrystal type)
@@ -58,11 +60,11 @@ public class LevelController : MonoBehaviour
 
     internal bool[] fruitsCollectedBoolArray()
     {
-        bool[] res = new bool[allFruitsOnTheLevel.Length];
+        bool[] res = new bool[allFruitsOnTheLvl.Length];
 
         for(int i = 0; i < res.Length; i++)
         {
-            res[i] = allFruitsOnTheLevel[i].collected;
+            res[i] = allFruitsOnTheLvl[i].collected;
         }
 
         return res;
@@ -152,6 +154,8 @@ public class LevelController : MonoBehaviour
         LevelController.current.cameraWhichLooksForRabbit.followRabbit = true;
         rabit.enabled = true;
         rabit.gameObject.GetComponent<AnimateController>().animate("die", false);
+        
+
         if (SceneManager.GetActiveScene().name == "chooseLevel")
         {
             moveRabbitToTheStartingPosition(rabit);
@@ -274,9 +278,13 @@ public class LevelController : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-
         configCoins();
-        configFruits();
+
+        if (fruitFromEnvironment != null)
+        {
+            this.allFruitsOnTheLvl = getAllFruitsInEnvironment();
+            configFruits();
+        }
         
         if(lockSprite != null)
         {
@@ -329,10 +337,15 @@ public class LevelController : MonoBehaviour
             {
                 if(arrayForFruits[i])
                 {
-                    allFruitsOnTheLevel[i].makeTranslucent();
+                    this.allFruitsOnTheLvl[i].makeTranslucent();
                 }
             }
         }
+    }
+
+    private Fruit[] getAllFruitsInEnvironment()
+    {
+        return this.fruitFromEnvironment.GetComponentsInChildren<Fruit>();
     }
 
     private void configCoins()

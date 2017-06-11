@@ -6,7 +6,7 @@ using UnityEngine;
 public class LevelStats : MonoBehaviour
 {
 
-    private const string SAVE_LVL_MARK = "lvlInfo", SAVE_COINS_MARK = "coinsInfo";
+    private const string SAVE_LVL_MARK = "lvlInfo2", SAVE_COINS_MARK = "coinsInfo2";
     public static LevelStats Instance;
 
     private void Awake()

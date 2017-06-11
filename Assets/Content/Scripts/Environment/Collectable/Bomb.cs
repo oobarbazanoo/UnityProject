@@ -11,11 +11,17 @@ public class Bomb : Collectable
         animateController = rabit.gameObject.GetComponent<AnimateController>();
         RabbitStats stats = rabit.gameObject.GetComponent<RabbitStats>();
 
-        if(rabit.isVulnerable)
+        if (stats.isDead)
+        { return; }
+
+        if (rabit.isVulnerable)
         {
             CollectedHide();
             if (stats.rabbitSize == 0)
-            { die(); }
+            {
+                stats.isDead = true;
+                die();
+            }
             else
             {
                 stats.rabbitSize = 0;

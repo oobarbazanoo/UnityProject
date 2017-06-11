@@ -26,7 +26,7 @@ public class WonPanel : MonoBehaviour
     private void initializeFruitsAndCoinsStat()
     {
         numberOfCoins.text = "+ " + LevelController.current.coinsWhichWillBeCollected;
-        numberOfFruit.text = LevelController.current.fruitsCollected + "/" + LevelController.current.allFruitsOnTheLevel.Length;
+        numberOfFruit.text = LevelController.current.fruitsCollected + "/" + LevelController.current.allFruitsOnTheLvl.Length;
     }
 
     private void initializeCrystalSprites()

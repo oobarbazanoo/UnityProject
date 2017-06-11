@@ -63,8 +63,11 @@ public class Enemy : MonoBehaviour
 
     private void initializeNeededValues()
     {
-        minimumWaitTime = 2;
-        maximumWaitTime = 5;
+        if(minimumWaitTime == 0 && maximumWaitTime == 0)
+        {
+            minimumWaitTime = 2;
+            maximumWaitTime = 5;
+        }
     }
 
     private double getRandomDouble(double fromInclusive, double toExclusive)
@@ -188,7 +191,10 @@ public class Enemy : MonoBehaviour
     private bool ifRabbitNear()
     {
         if(itIsBetween(rabbitTransform.position.x, pointB.x, pointA.x))
-        {return true;}
+        {
+            if (Math.Abs(rabbitTransform.position.y - pointB.y) < 11)
+            { return true; }
+        }
 
         return false;
         

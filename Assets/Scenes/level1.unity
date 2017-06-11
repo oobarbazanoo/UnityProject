@@ -1203,7 +1203,6 @@ Transform:
   - {fileID: 98743959}
   - {fileID: 200310236}
   - {fileID: 1882475104}
-  - {fileID: 1216666335}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13544,14 +13543,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1216666334}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 51.721035, y: 4.390326, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1641477366}
   - {fileID: 1150176340}
-  m_Father: {fileID: 96255790}
-  m_RootOrder: 5
+  m_Father: {fileID: 1610839841}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1217893776
 Prefab:
@@ -13903,6 +13902,11 @@ Prefab:
       propertyPath: lvlNumber
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114510708395091108, guid: 7f5f568261baa7c4d936ac85420fe7ec,
+        type: 2}
+      propertyPath: fruitFromEnvironment
+      value: 
+      objectReference: {fileID: 1491631797}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7f5f568261baa7c4d936ac85420fe7ec, type: 2}
   m_IsPrefabParent: 0
@@ -18208,6 +18212,7 @@ Transform:
   - {fileID: 464829882}
   - {fileID: 1779575829}
   - {fileID: 1986307757}
+  - {fileID: 1216666335}
   m_Father: {fileID: 96255790}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
